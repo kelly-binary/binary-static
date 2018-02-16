@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from '../../../javascript/app_2/pages/trading/components/form/button.jsx';
 import InputField from '../../../javascript/app_2/pages/trading/components/form/input_field.jsx';
+import Breadcrumb from '../../../javascript/app_2/pages/trading/components/elements/breadcrumbs.jsx';
 
 const StyleGuide = () => (
     <div className='container'>
@@ -90,6 +91,44 @@ const StyleGuide = () => (
                             label='Numbers Field'
                             helper='Helper messages go here'
                         />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div className='gr-row gr-padding-20'>
+            <div className='gr-8 gr-12-m'>
+                <div className='gr-row'>
+                    <div className='gr-12'>
+                        <h2 className='center-text'>Breadcrumbs</h2>
+                    </div>
+                </div>
+                <div className='gr-row'>
+                    <div className='gr-6'>
+                        <Breadcrumb routes= {
+                            [{
+                                name: 'Home',
+                                href: it.url_for('home'),
+                            }, {
+                                name: 'Getting started',
+                                href: it.url_for('get-started'),
+                            }, {
+                                name: 'Some',
+                            }]
+                        }/>
+                    </div>
+                    <div className='gr-6'>
+                        <Breadcrumb routes= {
+                            [{
+                                name: 'Home',
+                                icon: it.url_for('images/common/print.svg'),
+                                href: it.url_for('home'),
+                            }, {
+                                name: 'Getting started',
+                                href: it.url_for('get-started'),
+                            }, {
+                                name: 'Some',
+                            }]
+                        }/>
                     </div>
                 </div>
             </div>
