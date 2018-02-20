@@ -105,29 +105,29 @@ const StyleGuide = () => (
                 <div className='gr-row'>
                     <div className='gr-6'>
                         <Breadcrumb routes= {
-                            [{
-                                name: 'Home',
-                                href: it.url_for('home'),
-                            }, {
-                                name: 'Getting started',
-                                href: it.url_for('get-started'),
-                            }, {
-                                name: 'Some',
-                            }]
+                        [{
+                            name: 'Home',
+                            href: it.url_for('home'),
+                        }, {
+                            name: 'Getting started',
+                            href: it.url_for('get-started'),
+                        }, {
+                            name: 'Some',
+                        }]
                         }/>
                     </div>
                     <div className='gr-6'>
                         <Breadcrumb routes= {
-                            [{
-                                name: 'Home',
-                                icon: it.url_for('images/common/print.svg'),
-                                href: it.url_for('home'),
-                            }, {
-                                name: 'Getting started',
-                                href: it.url_for('get-started'),
-                            }, {
-                                name: 'Some',
-                            }]
+                        [{
+                            name: 'Home',
+                            icon: it.url_for('images/common/print.svg'),
+                            href: it.url_for('home'),
+                        }, {
+                            name: 'Getting started',
+                            href: it.url_for('get-started'),
+                        }, {
+                            name: 'Some',
+                        }]
                         }/>
                     </div>
                 </div>
