@@ -1,10 +1,10 @@
-import React, {Component, Fragment} from 'react';
+import React, { Fragment } from 'react';
 
 const BreadcrumbItem = ({
     name,
     href,
     icon,
-    isLastItem
+    isLastItem,
 }) => (
     <Fragment>
         <a href={href} className={isLastItem ? 'disabled' : ''}>
@@ -15,7 +15,7 @@ const BreadcrumbItem = ({
             : ''}
             <span>{name}</span>
         </a>
-        {isLastItem ? '' : <span className='separator'></span>}
+        {isLastItem ? '' : <span className='separator' />}
     </Fragment>
 );
 
