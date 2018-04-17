@@ -1,4 +1,5 @@
 import React from 'react';
+import Breadcrumb from '../../components/elements/breadcrumbs.jsx';
 import Button from '../../components/form/button.jsx';
 import { localize } from '../../../_common/localize';
 import { connect } from '../../store/connect';
@@ -32,6 +33,17 @@ class Cashier extends React.PureComponent {
     render() {
         return (
             <div className='default'>
+                <Breadcrumb routes= {
+                [{
+                    name: 'Cashier',
+                    href: '',
+                }, {
+                    name: 'Getting started',
+                    href: '',
+                }, {
+                    name: 'Some',
+                }]}
+                />
                 <p>View available payment methods <a href='' className='link'>here</a></p>
 
                 <div className='grid-4'>
