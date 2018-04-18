@@ -4,8 +4,9 @@ import Button from '../../components/form/button.jsx';
 import { localize } from '../../../_common/localize';
 import { connect } from '../../store/connect';
 
-const Card = ({ title, subtitle, buttons }) => (
+const Card = ({ title, subtitle, buttons, icon, iconSize }) => (
     <div className='card'>
+        <span className={`${icon} ${iconSize || 'ic-xl'}`} />
         <p className='card-title'>{localize(title)}</p>
         <p className='card-subtitle'>{localize(subtitle)}</p>
         <div className='card-btn-group'>
@@ -52,6 +53,7 @@ class Cashier extends React.PureComponent {
                         <Card
                             title='Bank-wire, credit card, e-cash wallet'
                             subtitle='Deposit or withdraw to your account via bank-wire, credit card, or e-cash wallet.'
+                            icon='ic_creditcard'
                             buttons={[
                                 {id: 'btn_deposit', text: 'Deposit', link: ''},
                                 {id: 'btn_withdraw', text: 'Withdraw', link: ''}]}
@@ -62,6 +64,7 @@ class Cashier extends React.PureComponent {
                         <Card
                             title='Payment Agent'
                             subtitle='For e-cash methods or local currencies not supported by Binary.com.'
+                            icon='ic_paymentagent'
                             buttons={[
                                 { id: 'btn_pa_deposit',  text: 'Deposit',  link: ''},
                                 { id: 'btn_pa_withdraw', text: 'Withdraw', link: ''}]}
@@ -72,6 +75,7 @@ class Cashier extends React.PureComponent {
                         <Card
                             title='Transfer Between Accounts'
                             subtitle='Transfer funds between your gaming accounts and financial accounts.'
+                            icon='ic_transfer'
                             buttons={[{ id: 'btn_transfer',  text: 'Transfer',  link: ''}]}
                         />
                     }
@@ -80,6 +84,7 @@ class Cashier extends React.PureComponent {
                         <Card
                             title='Top up Virtual Account'
                             subtitle='Top up your virtual account with an additional USD 10,000.00 if your balance falls below USD 1,000.00.'
+                            icon='ic_virtualmoney'
                             buttons={[{ id: 'btn_topup',   text: 'Get USD 10,000.00',  link: ''}]}
                         />
                     }
@@ -88,6 +93,7 @@ class Cashier extends React.PureComponent {
                         <Card
                             title='Cryptocurrency'
                             subtitle='Manage the funds in your cryptocurrency account.'
+                            icon='ic_cryptocurrency'
                             buttons={[
                                 { id: 'btn_deposit',  text: 'Deposit',  link: ''},
                                 { id: 'btn_withdraw', text: 'Withdraw', link: ''} ]}
