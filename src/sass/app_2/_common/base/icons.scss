@@ -1,0 +1,41 @@
+// TODO: replace with icon-fonts
+.ic-sm, .ic-md, .ic-lg, .ic-xl {
+    display: inline-block;
+
+    &.ic-sm {
+        height: 32px;
+        width: 32px;
+    }
+    &.ic-md {
+        height: 48px;
+        width: 48px;
+    }
+    &.ic-lg {
+        height: 64px;
+        width: 64px;
+    }
+    &.ic-xl {
+        height: 96px;
+        width: 96px;
+    }
+}
+
+.ic_cryptocurrency:before {
+    content: url('../images/trading_app/cashier/ic_cryptocurrency_normal.svg');
+}
+
+.ic_paymentagent:before {
+    content: url('../images/trading_app/cashier/ic_paymentagent_normal.svg');
+}
+
+.ic_transfer:before {
+    content: url('../images/trading_app/cashier/ic_transfer_normal.svg');
+}
+
+.ic_virtualmoney:before {
+    content: url('../images/trading_app/cashier/ic_virtualmoney_normal.svg');
+}
+
+.ic_creditcard:before {
+    content: url('../images/trading_app/cashier/ic_creditcard_normal.svg');
+}
