@@ -40,3 +40,16 @@ fieldset {
 :-moz-placeholder { /* Firefox 18- */
     color: $COLOR_DARK_WHITE;
 }
+
+#topup {
+    text-align: center;
+
+    h1 {
+        color: $COLOR_BLUE;
+    }
+}
+
+.topup-tile {
+    display: inline-block;
+}
+
