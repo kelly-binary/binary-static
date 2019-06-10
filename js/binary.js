@@ -32274,8 +32274,8 @@ var MetaTraderConfig = function () {
                     var showCitizenshipMessage = function showCitizenshipMessage() {
                         $message.find('.citizen').setVisibility(1).find('a').attr('onclick', 'localStorage.setItem(\'personal_details_redirect\', \'' + acc_type + '\')');
                     };
-                    var showAssessment = function showAssessment() {
-                        $message.find('.assessment').setVisibility(1).find('a').attr('onclick', 'localStorage.setItem(\'financial_assessment_redirect\', \'' + urlFor('user/metatrader') + '#' + acc_type + '\')');
+                    var showAssessment = function showAssessment(selector) {
+                        $message.find(selector).setVisibility(1).find('a').attr('onclick', 'localStorage.setItem(\'financial_assessment_redirect\', \'' + urlFor('user/metatrader') + '#' + acc_type + '\')');
                     };
                     var resolveWithMessage = function resolveWithMessage() {
                         $message.find(message_selector).setVisibility(1);
@@ -32299,8 +32299,11 @@ var MetaTraderConfig = function () {
                             if (is_maltainvest && !has_financial_account) resolve();
 
                             var response_get_account_status = State.getResponse('get_account_status');
-                            if (/(financial_assessment|trading_experience)_not_complete/.test(response_get_account_status.status)) {
-                                showAssessment();
+                            if (/financial_information_not_complete/.test(response_get_account_status.status)) {
+                                showAssessment('.assessment');
+                                is_ok = false;
+                            } else if (/trading_experience_not_complete/.test(response_get_account_status.status)) {
+                                showAssessment('.trading_experience');
                                 is_ok = false;
                             }
                             if (+State.getResponse('landing_company.config.tax_details_required') === 1 && (!response_get_settings.tax_residence || !response_get_settings.tax_identification_number)) {
@@ -32323,7 +32326,7 @@ var MetaTraderConfig = function () {
                             var response_get_account_status = State.getResponse('get_account_status');
                             if (/financial_assessment_not_complete/.test(response_get_account_status.status) && !accounts_info[acc_type].mt5_account_type // is_volatility
                             && /high/.test(response_get_account_status.risk_classification)) {
-                                showAssessment();
+                                showAssessment('.assessment');
                                 _is_ok = false;
                             }
                             if (!response_get_settings.citizen && !(is_maltainvest && !has_financial_account)) {
