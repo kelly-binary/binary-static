@@ -2963,7 +2963,7 @@ var Language = function () {
     var all_languages = {
         ACH: 'Translations',
         EN: 'English',
-        // DE   : 'Deutsch',
+        // DE   : 'Deutsch', // TODO: uncomment to enable German language
         ES: 'Español',
         FR: 'Français',
         ID: 'Indonesia',
