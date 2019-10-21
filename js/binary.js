@@ -17884,6 +17884,8 @@ var DigitInfo = function () {
             }
         });
         underlyings = underlyings.sort();
+        underlyings.splice(2, 0, '1HZ10V'); // add Volatility 10 (1s)
+        underlyings.splice(4, 0, '1HZ100V'); // add Volatility 100 (1s)
         var elem = '';
         for (var i = 0; i < underlyings.length; i++) {
             elem += '<option value="' + underlyings[i] + '">' + symbols[underlyings[i]] + '</option>';
@@ -19428,7 +19430,7 @@ var commonTrading = function () {
     // Order
     var market_order = {
         forex: 1,
-        volidx: 2,
+        synthetic_index: 2,
         indices: 3,
         stocks: 4,
         commodities: 5
@@ -19480,7 +19482,7 @@ var commonTrading = function () {
                 indices: 'indices',
                 stocks: 'otc-stocks-and-indices',
                 commodities: 'commodities',
-                volidx: 'volatility-indices'
+                synthetic_index: 'synthetic-indices'
             };
             tip.setAttribute('href', urlFor('/get-started/binary-options', 'anchor=' + map_to_section_id[market] + '#range-of-markets'));
         }
@@ -22533,7 +22535,7 @@ var submarket_order = {
     commodities: 15,
     metals: 16,
     energy: 17,
-    volidx: 18,
+    synthetic_index: 18,
     random_index: 19,
     random_daily: 20,
     random_nightly: 21
@@ -22637,6 +22639,7 @@ var Markets = (_temp = _class = function (_React$Component) {
                 onUnderlyingClick = this.onUnderlyingClick,
                 saveRef = this.saveRef,
                 scrollToMarket = this.scrollToMarket;
+
 
             return _react2.default.createElement(
                 'div',
@@ -24056,7 +24059,7 @@ var Purchase = function () {
                         } else if (/RestrictedCountry/.test(error.code)) {
                             var additional_message = '';
                             if (/FinancialBinaries/.test(error.code)) {
-                                additional_message = localize('Try our [_1]Volatility Indices[_2].', ['<a href="' + urlFor('get-started/binary-options', 'anchor=volatility-indices#range-of-markets') + '" >', '</a>']);
+                                additional_message = localize('Try our [_1]Synthetic Indices[_2].', ['<a href="' + urlFor('get-started/binary-options', 'anchor=synthetic-indices#range-of-markets') + '" >', '</a>']);
                             } else if (/Random/.test(error.code)) {
                                 additional_message = localize('Try our other markets.');
                             }
@@ -26595,25 +26598,27 @@ var Authenticate = function () {
                 while (1) {
                     switch (_context.prev = _context.next) {
                         case 0:
-                            $('#onfido').setVisibility(1);
-                            try {
-                                onfido = Onfido.init({
-                                    containerId: 'onfido',
-                                    language: {
-                                        locale: getLanguage().toLowerCase() || 'en'
-                                    },
-                                    token: sdk_token,
-                                    useModal: false,
-                                    onComplete: handleComplete,
-                                    steps: ['document', 'face']
-                                });
-                                $('#authentication_loading').setVisibility(0);
-                            } catch (err) {
-                                $('#error_occured').setVisibility(1);
-                                $('#authentication_loading').setVisibility(0);
+                            if (!$('#onfido').is(':parent')) {
+                                $('#onfido').setVisibility(1);
+                                try {
+                                    onfido = Onfido.init({
+                                        containerId: 'onfido',
+                                        language: {
+                                            locale: getLanguage().toLowerCase() || 'en'
+                                        },
+                                        token: sdk_token,
+                                        useModal: false,
+                                        onComplete: handleComplete,
+                                        steps: ['document', 'face']
+                                    });
+                                    $('#authentication_loading').setVisibility(0);
+                                } catch (err) {
+                                    $('#error_occured').setVisibility(1);
+                                    $('#authentication_loading').setVisibility(0);
+                                }
                             }
 
-                        case 2:
+                        case 1:
                         case 'end':
                             return _context.stop();
                     }
@@ -28764,7 +28769,7 @@ var LimitsUI = function () {
             Object.keys(limits.market_specific).forEach(function (market) {
                 appendRowTable(markets[market].name, '', 'auto', 'bold');
                 limits.market_specific[market].forEach(function (submarket) {
-                    // submarket name could be (Commodities|Minor Pairs|Major Pairs|Smart FX|Indices|Volatility Indices)
+                    // submarket name could be (Commodities|Minor Pairs|Major Pairs|Smart FX|Indices|Synthetic Indices)
                     appendRowTable(localize(submarket.name /* localize-ignore */), submarket.turnover_limit !== 'null' ? formatMoney(currency, submarket.turnover_limit, 1) : 0, '25px', 'normal');
                 });
             });
@@ -30890,7 +30895,7 @@ var Accounts = function () {
                 forex: localize('Forex'),
                 indices: localize('Indices'),
                 stocks: localize('Stocks'),
-                volidx: localize('Volatility Indices')
+                synthetic_index: localize('Synthetic Indices')
             };
         };
 
@@ -31711,6 +31716,8 @@ module.exports = MetaTraderConfig;
 "use strict";
 
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var MetaTraderConfig = __webpack_require__(/*! ./metatrader.config */ "./src/javascript/app/pages/user/metatrader/metatrader.config.js");
@@ -31739,27 +31746,25 @@ var MetaTrader = function () {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
                         case 0:
-                            setMTCompanies();
-
                             if (!isEligible()) {
-                                _context2.next = 12;
+                                _context2.next = 11;
                                 break;
                             }
 
                             if (!Client.get('is_virtual')) {
-                                _context2.next = 8;
+                                _context2.next = 7;
                                 break;
                             }
 
-                            _context2.next = 5;
+                            _context2.next = 4;
                             return addAllAccounts();
 
-                        case 5:
+                        case 4:
                             getAllAccountsInfo();
-                            _context2.next = 10;
+                            _context2.next = 9;
                             break;
 
-                        case 8:
+                        case 7:
                             BinarySocket.send({ get_limits: 1 }).then(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
                                 return regeneratorRuntime.wrap(function _callee$(_context) {
                                     while (1) {
@@ -31780,14 +31785,14 @@ var MetaTrader = function () {
                             })));
                             getExchangeRates();
 
-                        case 10:
-                            _context2.next = 13;
+                        case 9:
+                            _context2.next = 12;
                             break;
 
-                        case 12:
+                        case 11:
                             MetaTraderUI.displayPageError(localize('Sorry, this feature is not available in your jurisdiction.'));
 
-                        case 13:
+                        case 12:
                         case 'end':
                             return _context2.stop();
                     }
@@ -31832,37 +31837,36 @@ var MetaTrader = function () {
     var addAllAccounts = function addAllAccounts() {
         return new Promise(function (resolve) {
             BinarySocket.wait('mt5_login_list').then(function (response) {
-                var vanuatu_standard_real_account = response.mt5_login_list.find(function (account) {
-                    return Client.getMT5AccountType(account.group) === 'real_vanuatu_standard';
-                });
-
                 var vanuatu_standard_demo_account = response.mt5_login_list.find(function (account) {
                     return Client.getMT5AccountType(account.group) === 'demo_vanuatu_standard';
                 });
 
-                if (vanuatu_standard_real_account || vanuatu_standard_demo_account) {
-                    [vanuatu_standard_demo_account, vanuatu_standard_real_account].forEach(function (account) {
-                        if (account) {
-                            var mt5_account_type = Client.getMT5AccountType(account.group);
-                            var is_demo = /^demo_/.test(mt5_account_type);
-                            accounts_info[mt5_account_type] = {
-                                is_demo: is_demo,
-                                mt5_account_type: mt5_account_type,
-                                account_type: is_demo ? 'demo' : 'financial',
-                                max_leverage: 1000,
-                                short_title: localize('Standard'),
-                                title: is_demo ? localize('Demo Standard') : localize('Real Standard')
-                            };
-                        }
-                    });
+                var vanuatu_standard_real_account = response.mt5_login_list.find(function (account) {
+                    return Client.getMT5AccountType(account.group) === 'real_vanuatu_standard';
+                });
+
+                // Explicitly add (demo|real)_vanuatu_standard if it exist in API.
+                if (vanuatu_standard_demo_account) {
+                    accounts_info.demo_vanuatu_standard = _extends({
+                        is_demo: true,
+                        account_type: 'demo'
+                    }, mt_companies.financial.demo_standard);
+                }
+                if (vanuatu_standard_real_account) {
+                    accounts_info.real_vanuatu_standard = _extends({
+                        is_demo: false,
+                        account_type: 'financial'
+                    }, mt_companies.financial.real_standard);
                 }
 
                 Object.keys(mt_companies).forEach(function (company) {
                     Object.keys(mt_companies[company]).forEach(function (acc_type) {
                         mt_company[company] = State.getResponse('landing_company.mt_' + company + '_company.' + MetaTraderConfig.getMTFinancialAccountType(acc_type) + '.shortcode');
-                        if (mt_company[company]) {
-                            addAccount(company, vanuatu_standard_demo_account, vanuatu_standard_real_account);
-                        }
+
+                        // If vanuatu exists, don't add svg anymore unless it's for volatility.
+                        var vanuatu_and_svg_exists = (vanuatu_standard_demo_account && /demo_standard/.test(acc_type) || vanuatu_standard_real_account && /real_standard/.test(acc_type)) && /svg/.test(mt_company[company]) && mt_companies[company][acc_type].mt5_account_type;
+
+                        if (mt_company[company] && !vanuatu_and_svg_exists) addAccount(company, acc_type);
                     });
                 });
                 resolve();
@@ -31870,25 +31874,20 @@ var MetaTrader = function () {
         });
     };
 
-    var addAccount = function addAccount(company, vanuatu_standard_demo_account, vanuatu_standard_real_account) {
-        Object.keys(mt_companies[company]).forEach(function (acc_type) {
-            var company_info = mt_companies[company][acc_type];
-            var mt5_account_type = company_info.mt5_account_type;
-            var is_demo = /^demo_/.test(acc_type);
-            var type = is_demo ? 'demo' : 'real';
+    var addAccount = function addAccount(company, acc_type) {
+        var company_info = mt_companies[company][acc_type];
+        var mt5_account_type = company_info.mt5_account_type;
+        var is_demo = /^demo_/.test(acc_type);
+        var type = is_demo ? 'demo' : 'real';
 
-            // if have vanuatu, don't add svg anymore unless it's for volatility, meaning has mt5_account_type value
-            if (!((vanuatu_standard_demo_account || vanuatu_standard_real_account) && /svg/.test(mt_company[company]) && mt5_account_type)) {
-                accounts_info[type + '_' + mt_company[company] + (mt5_account_type ? '_' + mt5_account_type : '')] = {
-                    is_demo: is_demo,
-                    mt5_account_type: mt5_account_type,
-                    account_type: is_demo ? 'demo' : company,
-                    max_leverage: company_info.max_leverage,
-                    short_title: company_info.short_title,
-                    title: company_info.title
-                };
-            }
-        });
+        accounts_info[type + '_' + mt_company[company] + (mt5_account_type ? '_' + mt5_account_type : '')] = {
+            account_type: is_demo ? 'demo' : company,
+            is_demo: is_demo,
+            max_leverage: company_info.max_leverage,
+            mt5_account_type: mt5_account_type,
+            short_title: company_info.short_title,
+            title: company_info.title
+        };
     };
 
     var getAllAccountsInfo = function getAllAccountsInfo() {
@@ -32582,6 +32581,7 @@ var MetaTraderUI = function () {
         if (/(demo|real)/.test(selected_acc_type)) {
             displayAccountDescription(action);
             updateAccountTypesUI(selected_acc_type);
+            switchAcccountTypesUI(selected_acc_type, _$form);
             _$form.find('#view_1 #btn_next').addClass('button-disabled');
             _$form.find('#view_1 .step-2').setVisibility(1);
             displayMessage('#new_account_msg', selected_acc_type === 'real' && Client.get('is_virtual') ? MetaTraderConfig.needsRealMessage() : '', true);
@@ -32599,6 +32599,19 @@ var MetaTraderUI = function () {
         }
     };
 
+    var switchAcccountTypesUI = function switchAcccountTypesUI(type, form) {
+        var demo_btn = form.find('#view_1 .step-2 .type-group .template_demo');
+        var real_btn = form.find('#view_1 .step-2 .type-group .template_real');
+
+        if (/demo/.test(type)) {
+            demo_btn.removeClass('invisible');
+            real_btn.addClass('invisible');
+        } else {
+            demo_btn.addClass('invisible');
+            real_btn.removeClass('invisible');
+        }
+    };
+
     var updateAccountTypesUI = function updateAccountTypesUI(type) {
         Object.keys(accounts_info).filter(function (acc_type) {
             return acc_type.indexOf(type) === 0;
@@ -32612,27 +32625,28 @@ var MetaTraderUI = function () {
     };
 
     var populateAccountTypes = function populateAccountTypes() {
-        var $acc_template = $($templates.find('#rbtn_template').parent().remove()[0]);
+        var $acc_template_demo = $($templates.find('#rbtn_template_demo').parent().remove()[0]);
+        var $acc_template_real = $($templates.find('#rbtn_template_real').parent().remove()[0]);
         var $acc_template_mt = $templates.find('#frm_new_account #view_1 .step-2 .type-group');
         var $acc_template_mam = $templates.find('#frm_new_account_mam #view_1 .step-2 .type-group');
-        if (!$acc_template.length || !$acc_template_mt.length || !$acc_template_mam.length) return;
+        if (!$acc_template_demo.length || !$acc_template_real.length || !$acc_template_mt.length || !$acc_template_mam.length) return;
 
         var count = 0;
         Object.keys(accounts_info).filter(function (acc_type) {
-            return !accounts_info[acc_type].is_demo && accounts_info[acc_type].mt5_account_type !== 'mamm';
+            return accounts_info[acc_type].mt5_account_type !== 'mamm';
         }) // toEnableMAM: remove second check
+        .filter(function (acc_type) {
+            return !/labuan_standard|svg_advanced|vanuatu_advanced|maltainvest_advanced/.test(acc_type);
+        }) // toEnableVanuatuAdvanced: remove vanuatu_advanced from regex
         .forEach(function (acc_type) {
-            // toEnableVanuatuAdvanced: remove vanuatu_advanced from regex below
-            if (/svg_advanced|labuan_standard|vanuatu_advanced|maltainvest_advanced/.test(acc_type)) {
-                return;
-            }
-            count++;
-            var $acc = $acc_template.clone();
+            var $acc = accounts_info[acc_type].is_demo ? $acc_template_demo.clone() : $acc_template_real.clone();
             var type = acc_type.split('_').slice(1).join('_');
-            var image = accounts_info[acc_type].mt5_account_type.replace(/mamm(_)*/, '').replace(/real_vanuatu_/, '') || 'volatility_indices'; // image name can be (advanced|standard|volatility_indices)
+            var image = accounts_info[acc_type].mt5_account_type.replace(/mamm(_)*/, '') || 'volatility_indices'; // image name can be (advanced|standard|volatility_indices)
             $acc.find('.mt5_type_box').attr({ id: 'rbtn_' + type, 'data-acc-type': type }).find('img').attr('src', urlForStatic('/images/pages/metatrader/icons/acc_' + image + '.svg'));
             $acc.find('p').text(accounts_info[acc_type].short_title);
             (/mam/.test(acc_type) ? $acc_template_mam : $acc_template_mt).append($acc);
+
+            count++;
         });
         $templates.find('.hl-types-of-accounts').setVisibility(count > 1);
     };
@@ -32740,7 +32754,8 @@ var MetaTraderUI = function () {
              The code below is to stop the tooltip from showing wrong
             information.
         */
-        if (/vanuatu_standard/.test(acc_type)) {
+        if (/(demo|real)_vanuatu_standard/.test(acc_type)) {
+            $el.removeAttr('data-balloon data-balloon-length');
             return;
         }
 
