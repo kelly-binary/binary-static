@@ -377,13 +377,6 @@ a.previous-wrapper {
       outline: none; }
     #mt_account_management .fst-container #fst_action #frm_manage_password button[type='submit'] {
       line-height: 22px; }
-    #mt_account_management .fst-container #fst_action #frm_revoke_mam #msg_form {
-      text-align: center; }
-    #mt_account_management .fst-container #fst_action #frm_new_account_mam .margin-left-right-20 {
-      margin-left: -20px;
-      margin-right: -20px; }
-    #mt_account_management .fst-container #fst_action #frm_new_account_mam .fill-bg-color.margin-left-right-20 {
-      margin-bottom: -20px; }
     #mt_account_management .fst-container #fst_action .type-group .mt5_type_box {
       width: 88px;
       height: 88px;
@@ -488,6 +481,9 @@ a.previous-wrapper {
   text-align: center; }
   .mt-sidebar-button .small-icon img {
     width: 76px; }
+
+tbody#instruments > tr > td {
+  width: 33%; }
 
 #portfolio td {
   padding: 10px;
@@ -1868,51 +1864,6 @@ a.previous-wrapper {
 
 .show-mb {
   display: none; }
-
-#binary_grid_banner {
-  padding-top: 0; }
-  #binary_grid_banner h3 {
-    line-height: 1.14; }
-  #binary_grid_banner > * {
-    padding: 0 !important;
-    border: solid 0.5px #dedede; }
-  #binary_grid_banner .banner-image {
-    left: -1px;
-    top: -1px;
-    margin-bottom: -1px;
-    position: relative;
-    max-height: 90px; }
-    @media (max-width: 480px) {
-      #binary_grid_banner .banner-image {
-        visibility: hidden;
-        display: none; }
-        #binary_grid_banner .banner-image-m {
-          position: relative;
-          left: -1px;
-          top: -1px;
-          visibility: visible;
-          display: -webkit-box !important;
-          display: -ms-flexbox !important;
-          display: flex !important;
-          max-height: 90px;
-          max-width: 93px; } }
-  @media (max-width: 480px) {
-    #binary_grid_banner .banner-text {
-      visibility: hidden;
-      display: none; }
-      #binary_grid_banner .banner-text-m {
-        visibility: visible;
-        display: -webkit-box !important;
-        display: -ms-flexbox !important;
-        display: flex !important; } }
-  @media (max-width: 768px) {
-    #binary_grid_banner .banner-text {
-      font-size: 18px; } }
-  #binary_grid_banner .button {
-    margin-bottom: 0; }
-    @media (max-width: 480px) {
-      #binary_grid_banner .button {
-        padding: 0; } }
 
 .api_token fieldset {
   margin: 20px 0; }

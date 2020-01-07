@@ -640,7 +640,8 @@ ul.bullet.gr-row > li {
 
 .foot-note {
   font-size: 0.7561436673rem;
-  color: #c2c2c2; }
+  color: #c2c2c2;
+  display: inline-block; }
 
 .button + .button {
   margin-left: 10px; }
@@ -1410,9 +1411,6 @@ html.mm-right.mm-opening body .mm-page, html.mm-right.mm-opening body #mm-blocke
   html.mm-right.mm-opening body .mm-page, html.mm-right.mm-opening body #mm-blocker, html.mm-right.mm-opening body .mm-fixed-top, html.mm-right.mm-opening body .mm-fixed-bottom {
     right: 250px; } }
 
-#accordion .ui-accordion-content {
-  padding-top: 0; }
-
 #ui-timepicker-div, #ui-timepicker-div:before, #ui-timepicker-div:after, #ui-datepicker-div, #ui-datepicker-div:before, #ui-datepicker-div:after {
   -webkit-transition: none;
   transition: none; }
@@ -1605,7 +1603,7 @@ body .app-store-badge, body .google-play-badge {
   display: inline-block;
   background-size: contain; }
 
-body.EN .calls_recording, body.ID .calls_recording, body.RU .calls_recording {
+body.EN .calls_recording, body.RU .calls_recording {
   display: block !important; }
 
 /*Vietnamese Language */
@@ -1733,12 +1731,6 @@ body.FR .app-store-badge {
 
 body.FR .google-play-badge {
   background-image: url("../images/pages/applications/googleplay_fr.svg"); }
-
-body.ID .app-store-badge {
-  background-image: url("../images/pages/applications/appstore_id.svg"); }
-
-body.ID .google-play-badge {
-  background-image: url("../images/pages/applications/googleplay_id.svg"); }
 
 body.IT .app-store-badge {
   background-image: url("../images/pages/applications/appstore_it.svg"); }
